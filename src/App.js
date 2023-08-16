@@ -11,33 +11,34 @@ export const App = () => {
   const [redLigth, setRedLight] = useState(RED)
   const [yellowLight, setYellowLight] = useState(YELLOW)
   const [greenLight, setGreenLight] = useState(GREEN)
+  const [light, setLight] = useState("red");
 
 
   useEffect(() => {
-
-    setTimeout(() => {
-      setRedLight("red");
-
-      setTimeout(() => {
-        setRedLight(RED);
-        setGreenLight("#3cd406");
-
-        setTimeout(() => {
-          setGreenLight(GREEN);
-          setYellowLight("yellow");
-
-          setTimeout(() => {
-            setYellowLight(YELLOW);
-
-          }, 3000);
-
-        }, 4000);
-
-      }, 4000);
-
-    }, 11000);
-
-  }, [])
+    let intervalId;
+    if (light === "red") {
+      setRedLight("red")
+      intervalId = setInterval(() => {
+        setRedLight(RED)
+        setLight("#3cd406")
+      }, 7000)
+    } else if (light === "#3cd406") {
+      setGreenLight("#3cd406")
+      intervalId = setInterval(() => {
+        setGreenLight(GREEN)
+        setLight("yellow")
+      }, 5000)
+    } else {
+      setYellowLight('yellow')
+      intervalId = setInterval(() => {
+        setYellowLight(YELLOW);
+        setLight('red')
+      }, 2000)
+    }
+    return () => {
+      clearInterval(intervalId)
+    }
+  }, [light])
 
   return (
     <div className="view">
